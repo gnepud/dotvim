@@ -25,6 +25,9 @@ set hidden
 set tabstop=4     " a tab is four spaces
 set shiftwidth=4
 
-"Delete warn message for Lusty plugin with use vi
+" Delete warn message for Lusty plugin with use vi
 let g:LustyExplorerSuppressRubyWarning = 1
 let g:LustyJugglerSuppressRubyWarning = 1
+
+" Command-T configuration
+let g:CommandTMaxHeight=20
