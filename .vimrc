@@ -1,3 +1,7 @@
+" Load pathogen bundles.
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+
 set nocompatible
 set encoding=utf-8
 set fileencoding=utf-8
