@@ -8,7 +8,7 @@ set encoding=utf-8
 set fileencoding=utf-8
 set number
 set ruler
-set nocompatible
+let mapleader = ","
 syntax on
 filetype plugin indent on
 set nobackup
@@ -20,10 +20,14 @@ set autoindent    " always set autoindenting on
 set copyindent    " copy the previous indentation on autoindenting
 set history=1000
 set nowrap
-let mapleader = ","
 set hidden
-set tabstop=4     " a tab is four spaces
+
+" a tab is four spaces
+set tabstop=4
 set shiftwidth=4
+
+" Status bar
+set laststatus=2
 
 " Delete warn message for Lusty plugin with use vi
 let g:LustyExplorerSuppressRubyWarning = 1
