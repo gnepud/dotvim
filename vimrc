@@ -27,6 +27,9 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 
+" .rb is generally Ruby
+au BufEnter *.rb set syntax=ruby  ai et ts=2 sw=2 tw=0
+
 " Status bar
 set laststatus=2
 
