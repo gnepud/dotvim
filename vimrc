@@ -51,3 +51,6 @@ set noequalalways
 
 " ZoomWin configuration
 map <Leader><Leader> :ZoomWin<CR>
+
+" AutoClose
+nmap <Leader>x <Plug>ToggleAutoCloseMappings
