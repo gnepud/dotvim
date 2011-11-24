@@ -54,3 +54,8 @@ map <Leader><Leader> :ZoomWin<CR>
 
 " AutoClose
 nmap <Leader>x <Plug>ToggleAutoCloseMappings
+
+" Markdown to HTML  
+" For use it, should download this script(http://daringfireball.net/projects/downloads/Markdown_1.0.1.zip)
+" and copy it in /usr/local/bin
+nmap <leader>md :%!/usr/local/bin/Markdown.pl --html4tags <cr>
