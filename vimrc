@@ -60,3 +60,11 @@ nmap <Leader>x <Plug>ToggleAutoCloseMappings
 " For use it, should download this script(http://daringfireball.net/projects/downloads/Markdown_1.0.1.zip)
 " and copy it in /usr/local/bin
 nmap <leader>md :%!/usr/local/bin/Markdown.pl --html4tags <cr>
+
+" double percentage sign in command mode is expanded
+" to directory of current file - http://vimcasts.org/e/14
+cnoremap %% <C-R>=expand("%:p:h")."/"<CR>
+map <leader>ew :e %%
+map <leader>es :sp %%
+map <leader>ev :vsp %%
+map <leader>et :tabe %%
