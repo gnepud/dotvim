@@ -35,6 +35,8 @@ au BufEnter *.rb set syntax=ruby ai ts=2 sw=2 sts=2 tw=0
 " Delete warn message for Lusty plugin with use vi
 let g:LustyExplorerSuppressRubyWarning = 1
 let g:LustyJugglerSuppressRubyWarning = 1
+" display the key with the name of the buffer
+let g:LustyJugglerShowKeys = 1
 
 " Command-T configuration
 let g:CommandTMaxHeight=20
@@ -244,11 +246,12 @@ function! s:Median(nums)
     endif
 endfunction
 
-set list                          " Show invisible characters
 set backspace=indent,eol,start    " backspace through everything in insert mode
+
+set list                          " Show invisible characters
 " List chars
 set listchars=""                  " Reset the listchars
-set listchars=tab:\ \             " a tab should display as "  ", trailing whitespace as "⋅"
+set listchars=tab:>⋅              " a tab should display as ">⋅", trailing whitespace as "⋅"
 set listchars+=trail:⋅            " show trailing spaces as middle-dots
 
 "syntastic settings
