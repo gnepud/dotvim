@@ -253,7 +253,3 @@ set list                          " Show invisible characters
 set listchars=""                  " Reset the listchars
 set listchars=tab:>⋅              " a tab should display as ">⋅", trailing whitespace as "⋅"
 set listchars+=trail:⋅            " show trailing spaces as middle-dots
-
-"syntastic settings
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_loc_list=2
