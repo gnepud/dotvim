@@ -33,21 +33,28 @@
 [submodule "bundle/css-color"]
 	path = bundle/css-color
 	url = git://github.com/skammer/vim-css-color.git
+	ignore = untracked
 [submodule "bundle/fugitive"]
 	path = bundle/fugitive
 	url = git://github.com/tpope/vim-fugitive.git
+	ignore = untracked
 [submodule "bundle/syntastic"]
 	path = bundle/syntastic
 	url = git://github.com/scrooloose/syntastic.git
+	ignore = untracked
 [submodule "bundle/rails"]
 	path = bundle/rails
 	url = git://github.com/tpope/vim-rails.git
+	ignore = untracked
 [submodule "bundle/autoclose"]
 	path = bundle/autoclose
 	url = git://github.com/vim-scripts/AutoClose.git
+	ignore = untracked
 [submodule "bundle/markdown"]
 	path = bundle/markdown
 	url = git://github.com/tpope/vim-markdown.git
+	ignore = untracked
 [submodule "bundle/less"]
 	path = bundle/less
 	url = git://github.com/groenewege/vim-less.git
+	ignore = untracked
