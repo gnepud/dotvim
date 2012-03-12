@@ -152,7 +152,7 @@ if exists("loaded_nerd_tree")
   call s:DefineCommand("cd", "ChangeDirectory")
   call s:DefineCommand("touch", "Touch")
   call s:DefineCommand("rm", "Remove")
-  call s:DefineCommand("e", "Edit")
+  "call s:DefineCommand("e", "Edit")
   call s:DefineCommand("mkdir", "Mkdir")
   cabbrev Edit! e!
 endif
