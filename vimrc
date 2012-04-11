@@ -15,7 +15,10 @@ filetype plugin indent on
 set nobackup
 set noswapfile
 "autocmd BufEnter * lcd %:p:h 	" Auto change the directory to the current file I'm working on
+set showmatch
 set incsearch
+" make searches case-sensitive only if they contain upper-case characters
+set ignorecase smartcase
 set autoread
 set autoindent    " always set autoindenting on
 set copyindent    " copy the previous indentation on autoindenting
