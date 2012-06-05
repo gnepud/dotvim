@@ -61,3 +61,6 @@
 [submodule "bundle/coffee-script"]
 	path = bundle/coffee-script
 	url = git://github.com/kchmck/vim-coffee-script.git
+[submodule "bundle/mustashe"]
+	path = bundle/mustashe
+	url = git://github.com/juvenn/mustache.vim.git
