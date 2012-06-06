@@ -64,3 +64,6 @@
 [submodule "bundle/mustashe"]
 	path = bundle/mustashe
 	url = git://github.com/juvenn/mustache.vim.git
+[submodule "bundle/eddie"]
+	path = bundle/eddie
+	url = git://github.com/mattsa/vim-eddie.git

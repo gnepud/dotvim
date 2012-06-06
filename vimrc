@@ -2,7 +2,7 @@
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
-colorscheme molokai
+colorscheme eddie
 set nocompatible
 set encoding=utf-8
 set fileencoding=utf-8
