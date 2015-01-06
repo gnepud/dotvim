@@ -1,6 +1,5 @@
 " Load pathogen bundles.
-call pathogen#incubate()
-call pathogen#helptags()
+execute pathogen#infect()
 
 colorscheme eddie
 set nocompatible
