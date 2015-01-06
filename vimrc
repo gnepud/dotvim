@@ -247,6 +247,8 @@ set list                          " Show invisible characters
 set listchars=""                  " Reset the listchars
 set listchars=tab:>⋅              " a tab should display as ">⋅", trailing whitespace as "⋅"
 set listchars+=trail:⋅            " show trailing spaces as middle-dots
+nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+nnoremap <silent> <F6> :let _s=@/<Bar>:%s/\t/  /ge<Bar>:let @/=_s<Bar>:nohl<CR>
 
 " gitgutter color
 highlight clear SignColumn
