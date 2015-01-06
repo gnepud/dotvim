@@ -63,3 +63,15 @@
 [submodule "bundle/eddie"]
 	path = bundle/eddie
 	url = git://github.com/mattsacks/vim-eddie.git
+[submodule "bundle/tlib"]
+	path = bundle/tlib
+	url = git://github.com/tomtom/tlib_vim.git
+[submodule "bundle/vim-addon-mw-utils"]
+	path = bundle/vim-addon-mw-utils
+	url = git://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule "bundle/snipmate"]
+	path = bundle/snipmate
+	url = git://github.com/garbas/vim-snipmate.git
+[submodule "bundle/snippets"]
+	path = bundle/snippets
+	url = git://github.com/honza/vim-snippets.git
