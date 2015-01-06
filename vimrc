@@ -255,3 +255,10 @@ set list                          " Show invisible characters
 set listchars=""                  " Reset the listchars
 set listchars=tab:>⋅              " a tab should display as ">⋅", trailing whitespace as "⋅"
 set listchars+=trail:⋅            " show trailing spaces as middle-dots
+
+" gitgutter color
+highlight clear SignColumn
+highlight GitGutterAdd ctermfg=green guifg=darkgreen
+highlight GitGutterChange ctermfg=yellow guifg=darkyellow
+highlight GitGutterDelete ctermfg=red guifg=darkred
+highlight GitGutterChangeDelete ctermfg=yellow guifg=darkyellow
