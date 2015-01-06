@@ -6,6 +6,12 @@ set lines=60
 " Fix displaying balloon tip with invalid 'ri' options
 set noballooneval
 
+" use the system clipboard as the default register
+set clipboard=unnamed
+if has('unnamedplus')
+  set clipboard=unnamed,unnamedplus
+endif
+
 " Project Tree
 if exists("loaded_nerd_tree")
   autocmd VimEnter * call s:CdIfDirectory(expand("<amatch>"))
