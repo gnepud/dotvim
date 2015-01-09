@@ -24,6 +24,7 @@ set copyindent    " copy the previous indentation on autoindenting
 set history=1000
 set nowrap
 set hidden
+set mouse=a
 
 " a tab is four spaces
 set tabstop=4
