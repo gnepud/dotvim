@@ -271,3 +271,9 @@ function! s:ZoomToggle() abort
 endfunction
 command! ZoomToggle call s:ZoomToggle()
 map <Leader><Leader> :ZoomToggle<CR>
+
+" use the system clipboard as the default register
+set clipboard=unnamed
+if has('unnamedplus')
+  set clipboard=unnamed,unnamedplus
+endif
