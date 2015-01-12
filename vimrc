@@ -29,10 +29,10 @@ if has('mouse')
   set mouse=a
 endif
 
-" a tab is four spaces
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+" a tab is two spaces
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 set expandtab   " use spaces, not tabs
 
 " use the system clipboard as the default register
