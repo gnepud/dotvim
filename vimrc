@@ -87,6 +87,12 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
+" Resizing vim window splits
+nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> - :exe "resize " . (winheight(0) * 2/3)<CR>
+nnoremap <silent> = <c-w>=
+nnoremap <silent> < <c-w><
+nnoremap <silent> > <c-w>>
 
 "statusline setup
 set statusline=%f       "tail of the filename
