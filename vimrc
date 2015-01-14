@@ -60,6 +60,12 @@ if &term =~ "xterm" || &term =~ "screen"
   " and Vim (7.3, with patches 1-843), this is all I need:
   let g:CommandTCancelMap = ['<ESC>', '<C-c>']
 endif
+" auto flush conmmand-t whenever add a new file
+augroup CommandTExtension
+  autocmd!
+  autocmd FocusGained * CommandTFlush
+  autocmd BufWritePost * CommandTFlush
+augroup END
 
 " NERDTree configuration
 "let NERDTreeIgnore=['\.pyc$', '\.rbc$', '\~$']
