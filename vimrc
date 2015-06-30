@@ -325,3 +325,7 @@ highlight GitGutterChangeDelete ctermfg=yellow guifg=darkyellow
 
 " disable balloon to display error messages
 let g:syntastic_enable_balloons = 0
+
+" Syntastic ignore html error
+let g:syntastic_html_tidy_ignore_errors=["<ion-", "discarding unexpected </ion-", " proprietary attribute \"ng-", " proprietary attribute \"on-"]
+
