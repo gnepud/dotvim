@@ -329,3 +329,5 @@ let g:syntastic_enable_balloons = 0
 " Syntastic ignore html error
 let g:syntastic_html_tidy_ignore_errors=["<ion-", "discarding unexpected </ion-", " proprietary attribute \"ng-", " proprietary attribute \"on-"]
 
+" enable JSX syntax highlighting and indenting in .js files
+let g:jsx_ext_required = 0
