@@ -86,3 +86,6 @@
 [submodule "bundle/javascript"]
 	path = bundle/javascript
 	url = git://github.com/pangloss/vim-javascript.git
+[submodule "bundle/typescript-vim"]
+	path = bundle/typescript-vim
+	url = https://github.com/leafgarland/typescript-vim.git
