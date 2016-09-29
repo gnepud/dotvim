@@ -1,6 +1,36 @@
-" Load pathogen bundles.
-execute pathogen#infect()
-call pathogen#helptags()
+call plug#begin('~/.vim/plugged')
+
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-repeat'
+Plug 'scrooloose/syntastic'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'mattn/emmet-vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/vim-easy-align'
+Plug 'Raimondi/delimitMate'
+Plug 'wincent/Command-T', { 'do': 'cd ruby/command-t && ruby extconf.rb && make' }
+Plug 'mileszs/ack.vim'
+
+" Lang Syntax highlight
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'kchmck/vim-coffee-script'
+Plug 'leafgarland/typescript-vim'
+
+" Theme color
+Plug 'mattsacks/vim-eddie'
+
+" Plugin outside ~/.vim/plugged with post-update hook
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'junegunn/fzf.vim'
+
+" Add plugins to &runtimepath
+call plug#end()
 
 " ===========================
 " Basic settings
@@ -12,19 +42,29 @@ set fileencoding=utf-8
 set number
 set ruler
 set showcmd
-let mapleader = ","
-syntax on
-filetype plugin indent on
+let mapleader = ','
+if has('autocmd')
+  filetype plugin indent on
+endif
+if has('syntax') && !exists('g:syntax_on')
+  syntax enable
+endif
 set nobackup
 set noswapfile
-"autocmd BufEnter * lcd %:p:h 	" Auto change the directory to the current file I'm working on
+"autocmd BufEnter * lcd %:p:h   " Auto change the directory to the current file I'm working on
 set showmatch
 set incsearch
+" Use <C-L> to clear the highlighting of :set hlsearch.
+if maparg('<C-L>', 'n') ==# ''
+  nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+endif
 " make searches case-sensitive only if they contain upper-case characters
 set ignorecase smartcase
 set autoread
 set autoindent    " always set autoindenting on
 set copyindent    " copy the previous indentation on autoindenting
+set complete-=i
+set smarttab
 set history=1000
 set nowrap
 set hidden
@@ -33,7 +73,7 @@ if has('mouse')
 endif
 
 " Fix displaying balloon tip with invalid 'ri' options
-set noballooneval
+"set noballooneval
 
 " a tab is two spaces
 set tabstop=2
@@ -86,6 +126,9 @@ nnoremap <silent> - :exe "resize " . (winheight(0) * 2/3)<CR>
 nnoremap <silent> = <c-w>=
 nnoremap <silent> < <c-w><
 nnoremap <silent> > <c-w>>
+
+" http://tilvim.com/2014/03/18/a-better-paste.html
+"map <Leader>p :set paste<CR>o<esc>"*]p:set nopaste<CR>
 
 
 " ===========================
@@ -288,27 +331,6 @@ endfunction
 " Plugins settings
 " ===========================
 
-" LustyExplorer configuration
-" Delete warn message for Lusty plugin with use vi
-let g:LustyExplorerSuppressRubyWarning = 1
-let g:LustyJugglerSuppressRubyWarning = 1
-" display the key with the name of the buffer
-let g:LustyJugglerShowKeys = 1
-
-" Command-T configuration
-let g:CommandTMaxHeight=20
-if &term =~ "xterm" || &term =~ "screen"
-  " as of March 2013, with current iTerm (1.0.0.20130319), tmux (1.8)
-  " and Vim (7.3, with patches 1-843), this is all I need:
-  let g:CommandTCancelMap = ['<ESC>', '<C-c>']
-endif
-" auto flush conmmand-t whenever add a new file
-augroup CommandTExtension
-  autocmd!
-  autocmd FocusGained * CommandTFlush
-  autocmd BufWritePost * CommandTFlush
-augroup END
-
 " NERDTree configuration
 "let NERDTreeIgnore=['\.pyc$', '\.rbc$', '\~$']
 map <Leader>n :NERDTreeToggle<CR>
@@ -331,3 +353,25 @@ let g:syntastic_html_tidy_ignore_errors=["<ion-", "discarding unexpected </ion-"
 
 " enable JSX syntax highlighting and indenting in .js files
 let g:jsx_ext_required = 0
+
+" Command-T configuration
+let g:CommandTMaxHeight=20
+if &term =~ "xterm" || &term =~ "screen"
+  " as of March 2013, with current iTerm (1.0.0.20130319), tmux (1.8)
+  " and Vim (7.3, with patches 1-843), this is all I need:
+  let g:CommandTCancelMap = ['<ESC>', '<C-c>']
+endif
+" auto flush conmmand-t whenever add a new file
+augroup CommandTExtension
+  autocmd!
+  autocmd FocusGained * CommandTFlush
+  autocmd BufWritePost * CommandTFlush
+augroup END
+
+" Ack config The Silver Searcher
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep --smart-case'
+endif
+" don't jump to the first result automatically
+cnoreabbrev Ack Ack!
+nnoremap <Leader>a :Ack!<Space>
