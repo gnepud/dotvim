@@ -15,7 +15,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'Raimondi/delimitMate'
 Plug 'wincent/Command-T', { 'do': 'cd ruby/command-t && ruby extconf.rb && make' }
 Plug 'mileszs/ack.vim'
-Plug 'justinmk/vim-sneak'
 
 " Lang Syntax highlight
 Plug 'pangloss/vim-javascript'
@@ -376,12 +375,6 @@ endif
 " don't jump to the first result automatically
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
-
-" Map Sneak_s using nmap-- not nnoremap. That seems to cause problems
-nmap <Tab> <Plug>Sneak_s
-nmap <S-Tab> <Plug>Sneak_S
-vmap <Tab> <Plug>Sneak_s
-vmap <S-Tab> <Plug>Sneak_S
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
