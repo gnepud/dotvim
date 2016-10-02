@@ -351,16 +351,6 @@ let g:syntastic_html_tidy_ignore_errors=["<ion-", "discarding unexpected </ion-"
 " enable JSX syntax highlighting and indenting in .js files
 let g:jsx_ext_required = 0
 
-" Command-T configuration
-let g:CommandTMaxHeight=20
-if &term =~ "xterm" || &term =~ "screen"
-  " as of March 2013, with current iTerm (1.0.0.20130319), tmux (1.8)
-  " and Vim (7.3, with patches 1-843), this is all I need:
-  let g:CommandTCancelMap = ['<ESC>', '<C-c>']
-endif
-" auto flush conmmand-t whenever add a new file
-autocmd CursorHold,CursorHoldI * call NERDTreeFocus() | call g:NERDTree.ForCurrentTab().getRoot().refresh() | call g:NERDTree.ForCurrentTab().render() | wincmd w
-
 " Ack config The Silver Searcher
 if executable('ag')
   let g:ackprg = 'ag --vimgrep --smart-case'
