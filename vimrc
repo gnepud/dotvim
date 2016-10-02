@@ -13,7 +13,6 @@ Plug 'mattn/emmet-vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/vim-easy-align'
 Plug 'Raimondi/delimitMate'
-Plug 'wincent/Command-T', { 'do': 'cd ruby/command-t && ruby extconf.rb && make' }
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -26,10 +25,6 @@ Plug 'leafgarland/typescript-vim'
 
 " Theme color
 Plug 'mattsacks/vim-eddie'
-
-" Plugin outside ~/.vim/plugged with post-update hook
-"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-"Plug 'junegunn/fzf.vim'
 
 " Add plugins to &runtimepath
 call plug#end()
