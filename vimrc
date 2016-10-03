@@ -364,6 +364,9 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
+" FZF
+nmap <Leader>f :Files<CR>
+
 if has('gui_macvim')
   " Command-T configuration
   let g:CommandTMaxHeight=20
