@@ -332,9 +332,6 @@ endfunction
 "let NERDTreeIgnore=['\.pyc$', '\.rbc$', '\~$']
 map <Leader>n :NERDTreeToggle<CR>
 
-" AutoClose
-nmap <Leader>x <Plug>ToggleAutoCloseMappings
-
 " Gitgutter color
 highlight clear SignColumn
 highlight GitGutterAdd ctermfg=green guifg=darkgreen
