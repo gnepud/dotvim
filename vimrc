@@ -71,6 +71,8 @@ set hidden
 if has('mouse')
   set mouse=a
 endif
+set ttimeout
+set ttimeoutlen=100
 
 " Fix displaying balloon tip with invalid 'ri' options
 "set noballooneval
