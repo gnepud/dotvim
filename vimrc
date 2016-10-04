@@ -100,6 +100,8 @@ set listchars=""                  " Reset the listchars
 set listchars=tab:>⋅              " a tab should display as ">⋅", trailing whitespace as "⋅"
 set listchars+=trail:⋅            " show trailing spaces as middle-dots
 
+" autoflesh changed files
+autocmd BufEnter,FocusGained * checktime
 
 " ===========================
 " keymap settings
