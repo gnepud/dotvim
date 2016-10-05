@@ -16,9 +16,6 @@ Plug 'Raimondi/delimitMate'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-if has('gui_macvim')
-  Plug 'wincent/Command-T', { 'do': 'cd ruby/command-t && ruby extconf.rb && make' }
-endif
 
 " Lang Syntax highlight
 Plug 'pangloss/vim-javascript'
@@ -376,19 +373,3 @@ nmap ga <Plug>(EasyAlign)
 
 " FZF
 nmap <Leader>f :Files<CR>
-
-if has('gui_macvim')
-  " Command-T configuration
-  let g:CommandTMaxHeight=20
-  if &term =~ "xterm" || &term =~ "screen"
-    " as of March 2013, with current iTerm (1.0.0.20130319), tmux (1.8)
-    " and Vim (7.3, with patches 1-843), this is all I need:
-    let g:CommandTCancelMap = ['<ESC>', '<C-c>']
-  endif
-  " auto flush conmmand-t whenever add a new file
-  augroup CommandTExtension
-    autocmd!
-    autocmd FocusGained * CommandTFlush
-    autocmd BufWritePost * CommandTFlush
-  augroup END
-endif
