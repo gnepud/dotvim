@@ -34,7 +34,9 @@ call plug#end()
 " ===========================
 colorscheme eddie
 set nocompatible
-set encoding=utf-8
+if &encoding ==# 'latin1' && has('gui_running')
+  set encoding=utf-8
+endif
 set fileencoding=utf-8
 set number
 set ruler
@@ -51,6 +53,9 @@ set noswapfile
 "autocmd BufEnter * lcd %:p:h   " Auto change the directory to the current file I'm working on
 set showmatch
 set incsearch
+set hlsearch
+" redraws the screen and removes any search highlighting.
+nnoremap <silent> <leader>l :nohl<CR>
 " Use <C-L> to clear the highlighting of :set hlsearch.
 if maparg('<C-L>', 'n') ==# ''
   nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
@@ -70,6 +75,7 @@ if has('mouse')
 endif
 set ttimeout
 set ttimeoutlen=100
+set title
 
 " Fix displaying balloon tip with invalid 'ri' options
 "set noballooneval
@@ -122,11 +128,11 @@ nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
 " Resizing vim window splits
-nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
-nnoremap <silent> - :exe "resize " . (winheight(0) * 2/3)<CR>
-nnoremap <silent> = <c-w>=
-nnoremap <silent> < <c-w><
-nnoremap <silent> > <c-w>>
+nnoremap + :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap - :exe "resize " . (winheight(0) * 2/3)<CR>
+nnoremap = <c-w>=
+nnoremap < :vertical resize -5<CR>
+nnoremap > :vertical resize +5<CR>
 
 " http://tilvim.com/2014/03/18/a-better-paste.html
 "map <Leader>p :set paste<CR>o<esc>"*]p:set nopaste<CR>
