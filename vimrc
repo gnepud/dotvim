@@ -336,8 +336,14 @@ endfunction
 " ===========================
 
 " NERDTree configuration
-"let NERDTreeIgnore=['\.pyc$', '\.rbc$', '\~$']
+" hide Prees ? for help
+let NERDTreeMinimalUI = 1
 map <Leader>n :NERDTreeToggle<CR>
+" NERDTree automatically when vim starts up, and cursor start in the other window
+"autocmd vimenter * NERDTree
+"autocmd vimenter * wincmd p
+" close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " Gitgutter color
 highlight clear SignColumn
