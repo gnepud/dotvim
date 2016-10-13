@@ -16,6 +16,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/gv.vim'
 
 " Lang Syntax highlight
 Plug 'pangloss/vim-javascript'
