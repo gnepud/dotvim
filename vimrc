@@ -56,7 +56,7 @@ set showmatch
 set incsearch
 set hlsearch
 " redraws the screen and removes any search highlighting.
-nnoremap <silent> <leader>l :nohl<CR>
+nnoremap <silent><expr> <Leader>l (&hls && v:hlsearch ? ':nohls' : ':set hls')."\n"
 " Use <C-L> to clear the highlighting of :set hlsearch.
 if maparg('<C-L>', 'n') ==# ''
   nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
