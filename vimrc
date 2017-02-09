@@ -342,6 +342,7 @@ endfunction
 " NERDTree configuration
 " hide Prees ? for help
 let NERDTreeMinimalUI = 1
+let NERDTreeAutoDeleteBuffer = 1
 map <Leader>n :NERDTreeToggle<CR>
 " NERDTree automatically when vim starts up, and cursor start in the other window
 "autocmd vimenter * NERDTree
