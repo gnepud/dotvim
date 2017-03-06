@@ -6,7 +6,15 @@ git pull git@github.com:gnepud/dotvim.git ~/.vim
 ln -s ~/.vim/vimrc ~/.vimrc
 ln -s ~/.vim/gvimrc ~/.gvimrc
 ln -s ~/.vim ~/.config/nvim
-ln -s ~/.vim/vimrc ~/.config/nvim/init.vim
+```
+
+Add init.vim for Neovim and setting up python
+```
+source ~/.vim/vimrc
+
+# https://github.com/zchee/deoplete-jedi/wiki/Setting-up-Python-for-Neovim
+let g:python_host_prog = '/path/to/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = '/path/to/.pyenv/versions/neovim3/bin/python'
 ```
 
 Install vim-plug
