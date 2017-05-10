@@ -17,6 +17,10 @@ let g:python_host_prog = '/path/to/.pyenv/versions/neovim2/bin/python'
 let g:python3_host_prog = '/path/to/.pyenv/versions/neovim3/bin/python'
 ```
 
+NEOVIM > 0.2.0 default cursor
+cf: (https://github.com/neovim/neovim/wiki/Following-HEAD#20170402)[https://github.com/neovim/neovim/wiki/Following-HEAD#20170402]
+cf: (https://github.com/neovim/neovim/wiki/FAQ#how-can-i-change-the-cursor-shape-in-the-terminal)[https://github.com/neovim/neovim/wiki/FAQ#how-can-i-change-the-cursor-shape-in-the-terminal]
+
 Install vim-plug
 ```
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
