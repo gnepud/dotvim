@@ -17,6 +17,7 @@ Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/gv.vim'
+Plug 'heavenshell/vim-jsdoc'
 
 " Lang Syntax highlight
 Plug 'pangloss/vim-javascript'
@@ -381,3 +382,9 @@ nmap ga <Plug>(EasyAlign)
 
 " FZF
 nmap <Leader>f :Files<CR>
+
+" javascript
+" Enables syntax highlighting for JSDocs
+let g:javascript_plugin_jsdoc = 1
+" Enables syntax highlighting for Flow
+let g:javascript_plugin_flow = 1
