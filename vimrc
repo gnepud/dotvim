@@ -4,29 +4,41 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter', { 'commit': '1e60667322b7cd1bfcba98762fbba746a888d21a' }
 Plug 'tpope/vim-rails'
-Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-repeat'
-Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'mattn/emmet-vim'
-Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/vim-easy-align'
-Plug 'Raimondi/delimitMate'
+Plug 'jiangmiao/auto-pairs'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/gv.vim'
 Plug 'heavenshell/vim-jsdoc'
+Plug 'sjl/gundo.vim'
 
 " Lang Syntax highlight
+Plug 'tpope/vim-markdown'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'kchmck/vim-coffee-script'
 Plug 'leafgarland/typescript-vim'
 
 " Theme color
-Plug 'mattsacks/vim-eddie'
+Plug 'tomasiser/vim-code-dark'
+
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+"Plug 'wokalski/autocomplete-flow'
+" For func argument completion
+"Plug 'Shougo/neosnippet'
+"Plug 'Shougo/neosnippet-snippets'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -34,7 +46,7 @@ call plug#end()
 " ===========================
 " Basic settings
 " ===========================
-colorscheme eddie
+colorscheme codedark
 set nocompatible
 if &encoding ==# 'latin1' && has('gui_running')
   set encoding=utf-8
@@ -163,6 +175,20 @@ map <Leader><Leader> :ZoomToggle<CR>
 " and copy it in /usr/local/bin
 nmap <leader>md :%!/usr/local/bin/Markdown.pl --html4tags <cr>
 
+set path+=.,src/**,client/**,api/**
+set suffixesadd=.js,.jsx
+"function! LoadMainNodeModule(fname)
+    "let nodeModules = "./node_modules/"
+    "let packageJsonPath = nodeModules . a:fname . "/package.json"
+
+    "if filereadable(packageJsonPath)
+        "return nodeModules . a:fname . "/" . json_decode(join(readfile(packageJsonPath))).main
+    "else
+        "return nodeModules . a:fname
+    "endif
+"endfunction
+"set includeexpr=LoadMainNodeModule(v:fname)
+
 
 " ===========================
 " statusline setup
@@ -196,7 +222,7 @@ set statusline+=%{StatuslineTrailingSpaceWarning()}
 set statusline+=%{StatuslineLongLineWarning()}
 
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%{ale#statusline#Status()}
 set statusline+=%*
 
 "display a warning if &paste is set
@@ -362,7 +388,7 @@ highlight GitGutterChangeDelete ctermfg=yellow guifg=darkyellow
 let g:syntastic_enable_balloons = 0
 
 " Syntastic ignore html error
-let g:syntastic_html_tidy_ignore_errors=["<ion-", "discarding unexpected </ion-", " proprietary attribute \"ng-", " proprietary attribute \"on-"]
+"let g:syntastic_html_tidy_ignore_errors=["<ion-", "discarding unexpected </ion-", " proprietary attribute \"ng-", " proprietary attribute \"on-"]
 
 " enable JSX syntax highlighting and indenting in .js files
 let g:jsx_ext_required = 0
@@ -373,7 +399,6 @@ if executable('ag')
 endif
 " don't jump to the first result automatically
 cnoreabbrev Ack Ack!
-nnoremap <Leader>a :Ack!<Space>
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -382,9 +407,27 @@ nmap ga <Plug>(EasyAlign)
 
 " FZF
 nmap <Leader>f :Files<CR>
+nmap <Leader>t :Tags<CR>
+nmap <Leader>a :Ag<CR>
 
 " javascript
 " Enables syntax highlighting for JSDocs
 let g:javascript_plugin_jsdoc = 1
 " Enables syntax highlighting for Flow
 let g:javascript_plugin_flow = 1
+
+" Deoplete
+let g:deoplete#enable_at_startup = 1
+" neosnippet
+"let g:neosnippet#enable_completed_snippet = 1
+"let g:autocomplete_flow#insert_paren_after_function = 0
+
+" Gundo
+nnoremap <F5> :GundoToggle<CR>
+
+" ALE
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\}
+" Set this setting in vimrc if you want to fix files automatically on save.
+let g:ale_fix_on_save = 1
