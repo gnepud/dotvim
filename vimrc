@@ -4,7 +4,8 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter', { 'commit': '1e60667322b7cd1bfcba98762fbba746a888d21a' }
+Plug 'junegunn/gv.vim'
+Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
 Plug 'w0rp/ale'
@@ -17,6 +18,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'heavenshell/vim-jsdoc'
 Plug 'sjl/gundo.vim'
+Plug 'majutsushi/tagbar'
 
 " Lang Syntax highlight
 Plug 'tpope/vim-markdown'
@@ -431,3 +433,6 @@ let g:ale_fixers = {
 \}
 " Set this setting in vimrc if you want to fix files automatically on save.
 let g:ale_fix_on_save = 1
+
+" Vim-gitgutter
+set updatetime=500
