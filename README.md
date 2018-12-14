@@ -2,9 +2,10 @@
 
 ### Installation
 ```
-git pull git@github.com:gnepud/dotvim.git ~/.vim
+git clone git@github.com:gnepud/dotvim.git ~/.vim
 ln -s ~/.vim/vimrc ~/.vimrc
 ln -s ~/.vim/gvimrc ~/.gvimrc
+mkdir ~/.config
 ln -s ~/.vim ~/.config/nvim
 ```
 
