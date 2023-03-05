@@ -1,46 +1,54 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'scrooloose/nerdcommenter'
-Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
-Plug 'airblade/vim-gitgutter'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
-Plug 'w0rp/ale'
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'mattn/emmet-vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'jiangmiao/auto-pairs'
-Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'heavenshell/vim-jsdoc'
-Plug 'sjl/gundo.vim'
-Plug 'majutsushi/tagbar'
-
-" Lang Syntax highlight
-Plug 'tpope/vim-markdown'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'kchmck/vim-coffee-script'
-Plug 'leafgarland/typescript-vim'
+Plug 'heavenshell/vim-jsdoc', {
+  \ 'for': ['javascript', 'javascript.jsx','typescript'],
+  \ 'do': 'make install'
+\}
+Plug 'mg979/vim-visual-multi'
+Plug 'windwp/nvim-autopairs'
 
 " Theme color
 Plug 'tomasiser/vim-code-dark'
+Plug 'sainnhe/sonokai'
+Plug 'sainnhe/edge'
+Plug 'tanvirtin/monokai.nvim'
 
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-"Plug 'wokalski/autocomplete-flow'
-" For func argument completion
-"Plug 'Shougo/neosnippet'
-"Plug 'Shougo/neosnippet-snippets'
+
+Plug 'nvim-treesitter/nvim-treesitter', { 'tag': 'v0.8.*', 'do': ':TSUpdate' }
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'kylechui/nvim-surround'
+
+Plug 'nvim-lua/plenary.nvim'
+"Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+"Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+
+Plug 'neovim/nvim-lspconfig'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+
+Plug 'L3MON4D3/LuaSnip', { 'tag': 'v1.2.*', 'do': 'make install_jsregexp' }
+Plug 'rafamadriz/friendly-snippets'
+Plug 'saadparwaiz1/cmp_luasnip'
+
+Plug 'github/copilot.vim'
+
+Plug 'numToStr/Comment.nvim'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -48,7 +56,29 @@ call plug#end()
 " ===========================
 " Basic settings
 " ===========================
-colorscheme codedark
+if has('termguicolors')
+  set termguicolors
+endif
+"colorscheme codedark
+
+" The configuration options should be placed before `colorscheme sonokai`.
+"let g:sonokai_style = 'shusia'
+let g:sonokai_better_performance = 1
+let g:sonokai_enable_italic = 0
+let g:sonokai_disable_italic_comment = 1
+colorscheme sonokai
+
+" The configuration options should be placed before `colorscheme edge`.
+"let g:edge_style = 'aura'
+"let g:edge_better_performance = 1
+"let g:edge_enable_italic = 0
+"let g:edge_disable_italic_comment = 1
+"colorscheme edge
+
+"colorscheme monokai_pro
+"lua require('monokai').setup { italics = false }
+
+
 set nocompatible
 if &encoding ==# 'latin1' && has('gui_running')
   set encoding=utf-8
@@ -65,6 +95,7 @@ if has('syntax') && !exists('g:syntax_on')
   syntax enable
 endif
 set nobackup
+set nowritebackup
 set noswapfile
 "autocmd BufEnter * lcd %:p:h   " Auto change the directory to the current file I'm working on
 set showmatch
@@ -101,9 +132,6 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set expandtab   " use spaces, not tabs
-
-" .rb is generally Ruby
-au BufEnter *.rb set syntax=ruby ai ts=2 sw=2 sts=2 tw=0
 
 " use the system clipboard as the default register
 set clipboard=unnamed
@@ -177,8 +205,8 @@ map <Leader><Leader> :ZoomToggle<CR>
 " and copy it in /usr/local/bin
 nmap <leader>md :%!/usr/local/bin/Markdown.pl --html4tags <cr>
 
-set path+=.,src/**,client/**,api/**
-set suffixesadd=.js,.jsx
+"set path+=.,src/**,client/**,api/**
+"set suffixesadd=.js,.jsx,.ts,.tsx
 "function! LoadMainNodeModule(fname)
     "let nodeModules = "./node_modules/"
     "let packageJsonPath = nodeModules . a:fname . "/package.json"
@@ -212,8 +240,6 @@ set statusline+=%y      "filetype
 set statusline+=%r      "read only flag
 set statusline+=%m      "modified flag
 
-set statusline+=%{fugitive#statusline()}
-
 "display a warning if &et is wrong, or we have mixed-indenting
 set statusline+=%#error#
 set statusline+=%{StatuslineTabWarning()}
@@ -224,7 +250,7 @@ set statusline+=%{StatuslineTrailingSpaceWarning()}
 set statusline+=%{StatuslineLongLineWarning()}
 
 set statusline+=%#warningmsg#
-"set statusline+=%{ale#statusline#Status()}
+set statusline+=%{fugitive#statusline()}
 set statusline+=%*
 
 "display a warning if &paste is set
@@ -369,7 +395,6 @@ endfunction
 " ===========================
 
 " NERDTree configuration
-" hide Prees ? for help
 let NERDTreeMinimalUI = 1
 let NERDTreeAutoDeleteBuffer = 1
 map <Leader>n :NERDTreeToggle<CR>
@@ -379,29 +404,7 @@ map <Leader>n :NERDTreeToggle<CR>
 " close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" Gitgutter color
-highlight clear SignColumn
-highlight GitGutterAdd ctermfg=green guifg=darkgreen
-highlight GitGutterChange ctermfg=yellow guifg=darkyellow
-highlight GitGutterDelete ctermfg=red guifg=darkred
-highlight GitGutterChangeDelete ctermfg=yellow guifg=darkyellow
-
-" disable balloon to display error messages
-let g:syntastic_enable_balloons = 0
-
-" Syntastic ignore html error
-"let g:syntastic_html_tidy_ignore_errors=["<ion-", "discarding unexpected </ion-", " proprietary attribute \"ng-", " proprietary attribute \"on-"]
-
-" enable JSX syntax highlighting and indenting in .js files
-let g:jsx_ext_required = 0
-
-" Ack config The Silver Searcher
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep --smart-case'
-endif
-" don't jump to the first result automatically
-cnoreabbrev Ack Ack!
-
+" vim-easy-align
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
@@ -409,30 +412,214 @@ nmap ga <Plug>(EasyAlign)
 
 " FZF
 nmap <Leader>f :Files<CR>
-nmap <Leader>t :Tags<CR>
-nmap <Leader>a :Ag<CR>
+nmap <Leader>F :Rg<CR>
+let g:fzf_preview_window = ['down,60%', 'ctrl-/']
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.9 } }
 
-" javascript
-" Enables syntax highlighting for JSDocs
-let g:javascript_plugin_jsdoc = 1
-" Enables syntax highlighting for Flow
-let g:javascript_plugin_flow = 1
+" Copilot
+"imap <silent> <M-j> <Plug>(copilot-next)
+"imap <silent> <M-k> <Plug>(copilot-previous)
 
-" Deoplete
-let g:deoplete#enable_at_startup = 1
-" neosnippet
-"let g:neosnippet#enable_completed_snippet = 1
-"let g:autocomplete_flow#insert_paren_after_function = 0
+" nvim-treesitter
+lua << EOF
+  local treesitter = require 'nvim-treesitter.configs'
 
-" Gundo
-nnoremap <F5> :GundoToggle<CR>
+  treesitter.setup {
+    ensure_installed = { "c", "lua", "vim", "help", "comment", "ruby", "python", "javascript", "typescript", "json", "css", "scss", "html", "markdown" },
+    highlight = {
+      enable = true
+    }
+  }
+EOF
 
-" ALE
-let g:ale_fixers = {
-\   'javascript': ['eslint'],
-\}
-" Set this setting in vimrc if you want to fix files automatically on save.
-let g:ale_fix_on_save = 1
+" nvim-lspconfig and null-ls.nvim
+lua << EOF
+  -- Mappings.
+  -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+  local opts = { noremap=true, silent=true }
+  vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+  vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
-" Vim-gitgutter
-set updatetime=500
+  -- Use an on_attach function to only map the following keys
+  -- after the language server attaches to the current buffer
+  local on_attach = function(client, bufnr)
+    client.server_capabilities.documentFormattingProvider =  true
+    -- Enable completion triggered by <c-x><c-o>
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+    -- Mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local bufopts = { noremap=true, silent=true, buffer=bufnr }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+    vim.keymap.set('n', '<space>wl', function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, bufopts)
+    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+    vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+    vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+  end
+  local capabilities = require('cmp_nvim_lsp').default_capabilities()
+  local nvim_lsp = require('lspconfig')
+  local servers = { 'tsserver', 'solargraph' }
+  for _, lsp in ipairs(servers) do
+    nvim_lsp[lsp].setup {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      flags = lsp_flags,
+    }
+  end
+  local null_ls = require("null-ls")
+  null_ls.setup({
+    sources = {
+      null_ls.builtins.formatting.eslint_d,
+      null_ls.builtins.formatting.rubocop,
+      null_ls.builtins.diagnostics.eslint_d,
+    },
+  })
+
+EOF
+
+" luasnip
+lua require("luasnip.loaders.from_vscode").lazy_load()
+
+" nvim-cmp
+lua <<EOF
+  -- Set up nvim-cmp.
+  local cmp = require'cmp'
+
+  cmp.setup({
+    snippet = {
+      -- REQUIRED - you must specify a snippet engine
+      expand = function(args)
+        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      end,
+    },
+    window = {
+      -- completion = cmp.config.window.bordered(),
+      -- documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-CR>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      -- { name = 'vsnip' }, -- For vsnip users.
+      { name = 'luasnip' }, -- For luasnip users.
+      -- { name = 'ultisnips' }, -- For ultisnips users.
+      -- { name = 'snippy' }, -- For snippy users.
+    }, {
+      { name = 'buffer' },
+    })
+  })
+  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+EOF
+
+" nvim-surround
+lua require("nvim-surround").setup({})
+
+" nvim-autopairs
+lua require("nvim-autopairs").setup {}
+
+" Comment.nvim
+lua require('Comment').setup()
+
+" gitsigns.nvim
+lua <<EOF
+  require('gitsigns').setup({
+    on_attach = function(bufnr)
+      local gs = package.loaded.gitsigns
+
+      local function map(mode, l, r, opts)
+        opts = opts or {}
+        opts.buffer = bufnr
+        vim.keymap.set(mode, l, r, opts)
+      end
+
+      -- Navigation
+      map('n', ']c', function()
+        if vim.wo.diff then return ']c' end
+        vim.schedule(function() gs.next_hunk() end)
+        return '<Ignore>'
+      end, {expr=true})
+
+      map('n', '[c', function()
+        if vim.wo.diff then return '[c' end
+        vim.schedule(function() gs.prev_hunk() end)
+        return '<Ignore>'
+      end, {expr=true})
+
+      -- Actions
+      map({'n', 'v'}, '<leader>hs', ':Gitsigns stage_hunk<CR>')
+      map({'n', 'v'}, '<leader>hr', ':Gitsigns reset_hunk<CR>')
+      map('n', '<leader>hS', gs.stage_buffer)
+      map('n', '<leader>hu', gs.undo_stage_hunk)
+      map('n', '<leader>hR', gs.reset_buffer)
+      map('n', '<leader>hp', gs.preview_hunk)
+      map('n', '<leader>hb', function() gs.blame_line{full=true} end)
+      map('n', '<leader>tb', gs.toggle_current_line_blame)
+      map('n', '<leader>hd', gs.diffthis)
+      map('n', '<leader>hD', function() gs.diffthis('~') end)
+      map('n', '<leader>td', gs.toggle_deleted)
+
+      -- Text object
+      map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+    end
+  })
+EOF
+
+" telescope.nvim
+"lua << EOF
+"require('telescope').setup {
+  "defaults = {
+    "layout_strategy = 'vertical',
+    "layout_config = {
+      "vertical = { width = 0.8 }
+    "},
+  "},
+  "extensions = {
+    "fzf = {
+      "fuzzy = true,                    -- false will only do exact matching
+      "override_generic_sorter = true,  -- override the generic sorter
+      "override_file_sorter = true,     -- override the file sorter
+      "case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                       "-- the default case_mode is "smart_case"
+    "}
+  "}
+"}
+"-- To get fzf loaded and working with telescope, you need to call
+"-- load_extension, somewhere after setup function:
+"require('telescope').load_extension('fzf')
+"EOF
