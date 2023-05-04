@@ -25,7 +25,7 @@ Plug 'sainnhe/edge'
 Plug 'tanvirtin/monokai.nvim'
 
 
-Plug 'nvim-treesitter/nvim-treesitter', { 'tag': 'v0.8.*', 'do': ':TSUpdate' }
+Plug 'nvim-treesitter/nvim-treesitter', { 'tag': 'v0.9.*', 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'kylechui/nvim-surround'
 
@@ -425,7 +425,7 @@ lua << EOF
   local treesitter = require 'nvim-treesitter.configs'
 
   treesitter.setup {
-    ensure_installed = { "c", "lua", "vim", "help", "comment", "ruby", "python", "javascript", "typescript", "json", "css", "scss", "html", "markdown" },
+    ensure_installed = { "c", "lua", "vim", "comment", "ruby", "python", "javascript", "typescript", "json", "css", "scss", "html", "markdown" },
     highlight = {
       enable = true
     }
