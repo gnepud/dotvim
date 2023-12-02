@@ -25,7 +25,7 @@ Plug 'sainnhe/edge'
 Plug 'tanvirtin/monokai.nvim'
 
 
-Plug 'nvim-treesitter/nvim-treesitter', { 'tag': 'v0.9.*', 'do': ':TSUpdate' }
+Plug 'nvim-treesitter/nvim-treesitter', { 'tag': 'v0.9.1', 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'kylechui/nvim-surround'
 
@@ -42,7 +42,7 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 
-Plug 'L3MON4D3/LuaSnip', { 'tag': 'v1.2.*', 'do': 'make install_jsregexp' }
+Plug 'L3MON4D3/LuaSnip', { 'tag': 'v2.*', 'do': 'make install_jsregexp' }
 Plug 'rafamadriz/friendly-snippets'
 Plug 'saadparwaiz1/cmp_luasnip'
 
