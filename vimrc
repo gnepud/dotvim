@@ -6,47 +6,24 @@ Plug 'junegunn/gv.vim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
-"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'mattn/emmet-vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'heavenshell/vim-jsdoc', {
-  \ 'for': ['javascript', 'javascript.jsx','typescript'],
-  \ 'do': 'make install'
-\}
 Plug 'mg979/vim-visual-multi'
 Plug 'windwp/nvim-autopairs'
 
 " Theme color
-Plug 'tomasiser/vim-code-dark'
 Plug 'sainnhe/sonokai'
 Plug 'sainnhe/edge'
-Plug 'tanvirtin/monokai.nvim'
 
-
-Plug 'nvim-treesitter/nvim-treesitter', { 'tag': 'v0.9.1', 'do': ':TSUpdate' }
+Plug 'nvim-treesitter/nvim-treesitter', { 'tag': 'v0.10.*', 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'kylechui/nvim-surround'
 
-Plug 'nvim-lua/plenary.nvim'
-"Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
-"Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
-
 Plug 'neovim/nvim-lspconfig'
-Plug 'jose-elias-alvarez/null-ls.nvim'
 
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
-
-Plug 'L3MON4D3/LuaSnip', { 'tag': 'v2.*', 'do': 'make install_jsregexp' }
-Plug 'rafamadriz/friendly-snippets'
-Plug 'saadparwaiz1/cmp_luasnip'
-
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
 
 Plug 'numToStr/Comment.nvim'
 
@@ -425,14 +402,32 @@ lua << EOF
   local treesitter = require 'nvim-treesitter.configs'
 
   treesitter.setup {
-    ensure_installed = { "c", "lua", "vim", "comment", "ruby", "python", "javascript", "typescript", "json", "css", "scss", "html", "markdown" },
+    ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "comment", "ruby", "python", "javascript", "typescript", "json", "css", "scss", "html", "markdown" },
     highlight = {
       enable = true
     }
   }
 EOF
 
-" nvim-lspconfig and null-ls.nvim
+" nvim-treesitter-context
+lua << EOF
+  require'treesitter-context'.setup{
+    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+    max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+    min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+    line_numbers = true,
+    multiline_threshold = 20, -- Maximum number of lines to show for a single context
+    trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+    mode = 'cursor',  -- Line used to calculate context. Choices: 'cursor', 'topline'
+    -- Separator between context and content. Should be a single character string, like '-'.
+    -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+    separator = nil,
+    zindex = 20, -- The Z-index of the context window
+    on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+  }
+EOF
+
+" nvim-lspconfig
 lua << EOF
   -- Mappings.
   -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -468,83 +463,6 @@ lua << EOF
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
     vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
   end
-  local capabilities = require('cmp_nvim_lsp').default_capabilities()
-  local nvim_lsp = require('lspconfig')
-  local servers = { 'tsserver', 'solargraph' }
-  for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      flags = lsp_flags,
-    }
-  end
-  local null_ls = require("null-ls")
-  null_ls.setup({
-    sources = {
-      null_ls.builtins.formatting.eslint_d,
-      null_ls.builtins.formatting.rubocop,
-      null_ls.builtins.diagnostics.eslint_d,
-    },
-  })
-
-EOF
-
-" luasnip
-lua require("luasnip.loaders.from_vscode").lazy_load()
-
-" nvim-cmp
-lua <<EOF
-  -- Set up nvim-cmp.
-  local cmp = require'cmp'
-
-  cmp.setup({
-    snippet = {
-      -- REQUIRED - you must specify a snippet engine
-      expand = function(args)
-        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-      end,
-    },
-    window = {
-      -- completion = cmp.config.window.bordered(),
-      -- documentation = cmp.config.window.bordered(),
-    },
-    mapping = cmp.mapping.preset.insert({
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-CR>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    }),
-    sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      -- { name = 'vsnip' }, -- For vsnip users.
-      { name = 'luasnip' }, -- For luasnip users.
-      -- { name = 'ultisnips' }, -- For ultisnips users.
-      -- { name = 'snippy' }, -- For snippy users.
-    }, {
-      { name = 'buffer' },
-    })
-  })
-  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline({ '/', '?' }, {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-      { name = 'buffer' }
-    }
-  })
-
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    })
-  })
 EOF
 
 " nvim-surround
@@ -599,27 +517,3 @@ lua <<EOF
     end
   })
 EOF
-
-" telescope.nvim
-"lua << EOF
-"require('telescope').setup {
-  "defaults = {
-    "layout_strategy = 'vertical',
-    "layout_config = {
-      "vertical = { width = 0.8 }
-    "},
-  "},
-  "extensions = {
-    "fzf = {
-      "fuzzy = true,                    -- false will only do exact matching
-      "override_generic_sorter = true,  -- override the generic sorter
-      "override_file_sorter = true,     -- override the file sorter
-      "case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                       "-- the default case_mode is "smart_case"
-    "}
-  "}
-"}
-"-- To get fzf loaded and working with telescope, you need to call
-"-- load_extension, somewhere after setup function:
-"require('telescope').load_extension('fzf')
-"EOF
