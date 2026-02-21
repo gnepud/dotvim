@@ -16,16 +16,26 @@ Plug 'windwp/nvim-autopairs'
 Plug 'sainnhe/sonokai'
 Plug 'sainnhe/edge'
 
-Plug 'nvim-treesitter/nvim-treesitter', { 'tag': 'v0.10.*', 'do': ':TSUpdate' }
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'kylechui/nvim-surround'
 
 Plug 'neovim/nvim-lspconfig'
 
-" Plug 'github/copilot.vim'
-
 Plug 'numToStr/Comment.nvim'
+
+" Plug 'github/copilot.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'MeanderingProgrammer/render-markdown.nvim'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'HakonHarnes/img-clip.nvim'
+Plug 'zbirenbaum/copilot.lua'
+Plug 'stevearc/dressing.nvim' " for enhanced input UI
+Plug 'folke/snacks.nvim' " for modern input UI
+Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -125,7 +135,10 @@ set listchars=tab:>⋅              " a tab should display as ">⋅", trailing w
 set listchars+=trail:⋅            " show trailing spaces as middle-dots
 
 " autoflesh changed files
-autocmd BufEnter,FocusGained * checktime
+augroup AutoCheckTime
+  autocmd!
+  autocmd BufEnter,FocusGained * checktime
+augroup END
 
 " ===========================
 " keymap settings
@@ -243,7 +256,12 @@ set statusline+=\ %P    "percent through file
 set laststatus=2        "show status bar
 
 "recalculate the trailing whitespace warning when idle, and after saving
-autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
+augroup StatuslineWarnings
+  autocmd!
+  autocmd CursorHold,BufWritePost * unlet! b:statusline_trailing_space_warning
+  autocmd CursorHold,BufWritePost * unlet! b:statusline_tab_warning
+  autocmd CursorHold,BufWritePost * unlet! b:statusline_long_line_warning
+augroup END
 
 "return '[\s]' if trailing white space is detected
 "return '' otherwise
@@ -274,9 +292,6 @@ function! StatuslineCurrentHighlight()
     endif
 endfunction
 
-"recalculate the tab warning flag when idle and after writing
-autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
-
 "return '[&et]' if &et is set wrong
 "return '[mixed-indenting]' if spaces and tabs are used to indent
 "return an empty string if everything is fine
@@ -301,9 +316,6 @@ function! StatuslineTabWarning()
     endif
     return b:statusline_tab_warning
 endfunction
-
-"recalculate the long line warning when idle and after saving
-autocmd cursorhold,bufwritepost * unlet! b:statusline_long_line_warning
 
 "return a warning for "long lines" where "long" is either &textwidth or 80 (if
 "no &textwidth is set)
@@ -379,7 +391,10 @@ map <Leader>n :NERDTreeToggle<CR>
 "autocmd vimenter * NERDTree
 "autocmd vimenter * wincmd p
 " close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup NERDTree
+  autocmd!
+  autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
 
 " vim-easy-align
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -463,6 +478,58 @@ lua << EOF
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
     vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
   end
+
+  -- Setup language servers using vim.lsp.config (Neovim 0.11+)
+  -- Uncomment the ones you need and ensure the LSP server is installed
+
+  -- TypeScript/JavaScript (npm install -g typescript-language-server typescript)
+  vim.lsp.config.ts_ls = {
+    cmd = { 'typescript-language-server', '--stdio' },
+    on_attach = on_attach,
+  }
+  vim.lsp.enable('ts_ls')
+
+  -- Python (pip install pyright)
+  vim.lsp.config.pyright = {
+    cmd = { 'pyright-langserver', '--stdio' },
+    on_attach = on_attach,
+  }
+  vim.lsp.enable('pyright')
+
+  -- Ruby (gem install solargraph)
+  vim.lsp.config.solargraph = {
+    cmd = { 'solargraph', 'stdio' },
+    on_attach = on_attach,
+  }
+  vim.lsp.enable('solargraph')
+
+  -- Lua (brew install lua-language-server)
+  -- vim.lsp.config.lua_ls = {
+  --   cmd = { 'lua-language-server' },
+  --   on_attach = on_attach,
+  -- }
+  -- vim.lsp.enable('lua_ls')
+
+  -- CSS (npm install -g vscode-langservers-extracted)
+  -- vim.lsp.config.cssls = {
+  --   cmd = { 'vscode-css-language-server', '--stdio' },
+  --   on_attach = on_attach,
+  -- }
+  -- vim.lsp.enable('cssls')
+
+  -- HTML (npm install -g vscode-langservers-extracted)
+  -- vim.lsp.config.html = {
+  --   cmd = { 'vscode-html-language-server', '--stdio' },
+  --   on_attach = on_attach,
+  -- }
+  -- vim.lsp.enable('html')
+
+  -- JSON (npm install -g vscode-langservers-extracted)
+  -- vim.lsp.config.jsonls = {
+  --   cmd = { 'vscode-json-language-server', '--stdio' },
+  --   on_attach = on_attach,
+  -- }
+  -- vim.lsp.enable('jsonls')
 EOF
 
 " nvim-surround
@@ -515,5 +582,18 @@ lua <<EOF
       -- Text object
       map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
     end
+  })
+EOF
+
+" avante.nvim
+lua <<EOF
+  require('avante').setup({
+    provider = "opencode",
+    acp_providers = {
+      ["opencode"] = {
+        command = "opencode",
+        args = { "acp" },
+      },
+    },
   })
 EOF
