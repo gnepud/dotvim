@@ -4,7 +4,6 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 Plug 'lewis6991/gitsigns.nvim'
-Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() } }
@@ -26,16 +25,10 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'numToStr/Comment.nvim'
 
 " Plug 'github/copilot.vim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'MunifTanjim/nui.nvim'
-Plug 'MeanderingProgrammer/render-markdown.nvim'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'nvim-tree/nvim-web-devicons'
-Plug 'HakonHarnes/img-clip.nvim'
-Plug 'zbirenbaum/copilot.lua'
-Plug 'stevearc/dressing.nvim' " for enhanced input UI
-Plug 'folke/snacks.nvim' " for modern input UI
-Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
+" Plug 'zbirenbaum/copilot.lua'
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'MunifTanjim/nui.nvim'
+" Plug 'hrsh7th/nvim-cmp'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -414,7 +407,7 @@ let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.9 } }
 
 " nvim-treesitter
 lua << EOF
-  local treesitter = require 'nvim-treesitter.configs'
+  local treesitter = require 'nvim-treesitter.config'
 
   treesitter.setup {
     ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "comment", "ruby", "python", "javascript", "typescript", "json", "css", "scss", "html", "markdown" },
@@ -496,12 +489,12 @@ lua << EOF
   }
   vim.lsp.enable('pyright')
 
-  -- Ruby (gem install solargraph)
-  vim.lsp.config.solargraph = {
-    cmd = { 'solargraph', 'stdio' },
+  -- Ruby (gem install ruby-lsp)
+  vim.lsp.config.ruby_lsp = {
+    cmd = { 'ruby-lsp' },
     on_attach = on_attach,
   }
-  vim.lsp.enable('solargraph')
+  vim.lsp.enable('ruby_lsp')
 
   -- Lua (brew install lua-language-server)
   -- vim.lsp.config.lua_ls = {
@@ -582,18 +575,5 @@ lua <<EOF
       -- Text object
       map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
     end
-  })
-EOF
-
-" avante.nvim
-lua <<EOF
-  require('avante').setup({
-    provider = "opencode",
-    acp_providers = {
-      ["opencode"] = {
-        command = "opencode",
-        args = { "acp" },
-      },
-    },
   })
 EOF
