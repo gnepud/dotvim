@@ -475,12 +475,26 @@ lua << EOF
   -- Setup language servers using vim.lsp.config (Neovim 0.11+)
   -- Uncomment the ones you need and ensure the LSP server is installed
 
-  -- TypeScript/JavaScript (npm install -g typescript-language-server typescript)
-  vim.lsp.config.ts_ls = {
-    cmd = { 'typescript-language-server', '--stdio' },
+  -- TypeScript/JavaScript (npm install -g typescript-language-server typescript@6)
+  -- vim.lsp.config.ts_ls = {
+  --   cmd = { 'typescript-language-server', '--stdio' },
+  --   on_attach = on_attach,
+  -- }
+  -- vim.lsp.enable('ts_ls')
+
+  -- TypeScript/JavaScript (npm install -g typescript@7)
+  vim.lsp.config.tsc = {
+    cmd = { 'tsc', '--lsp', '--stdio' },
+    filetypes = {
+      'javascript',
+      'javascriptreact',
+      'typescript',
+      'typescriptreact',
+    },
+    root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' },
     on_attach = on_attach,
   }
-  vim.lsp.enable('ts_ls')
+  vim.lsp.enable('tsc')
 
   -- Python (pip install pyright)
   vim.lsp.config.pyright = {
