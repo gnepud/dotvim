@@ -4,7 +4,6 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 Plug 'lewis6991/gitsigns.nvim'
-Plug 'tpope/vim-repeat'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -21,8 +20,6 @@ Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'kylechui/nvim-surround'
 
 Plug 'neovim/nvim-lspconfig'
-
-Plug 'numToStr/Comment.nvim'
 
 " Plug 'github/copilot.vim'
 " Plug 'zbirenbaum/copilot.lua'
@@ -544,9 +541,6 @@ lua require("nvim-surround").setup({})
 
 " nvim-autopairs
 lua require("nvim-autopairs").setup {}
-
-" Comment.nvim
-lua require('Comment').setup()
 
 " gitsigns.nvim
 lua <<EOF
