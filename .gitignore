@@ -1,5 +1,4 @@
 .DS_Store
 .netrwhist
-autoload
-plugged
-init.vim
+.lazy
+nvim.log
