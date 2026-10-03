@@ -1,1 +1,1 @@
-source ~/.vim/vimrc
+execute 'source' fnameescape(stdpath('config') . '/vimrc')
