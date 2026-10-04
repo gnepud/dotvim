@@ -40,8 +40,5 @@ set backspace=indent,eol,start    " backspace through everything in insert mode
 
 set list                          " Show invisible characters
 " List chars
-set listchars=""                  " Reset the listchars
 set listchars=tab:>⋅              " a tab should display as ">⋅", trailing whitespace as "⋅"
 set listchars+=trail:⋅            " show trailing spaces as middle-dots
-
-" autoflesh changed files

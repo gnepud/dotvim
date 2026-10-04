@@ -29,6 +29,3 @@ nnoremap > :vertical resize +5<CR>
 
 " Zoom / restore the current window.
 map <Leader><Leader> :ZoomToggle<CR>
-
-" Markdown to HTML; requires /usr/local/bin/Markdown.pl.
-nmap <leader>md :%!/usr/local/bin/Markdown.pl --html4tags <cr>

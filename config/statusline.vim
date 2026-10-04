@@ -35,8 +35,6 @@ set statusline+=%l/%L   "cursor line/total lines
 set statusline+=\ %P    "percent through file
 set laststatus=2        "show status bar
 
-"recalculate the trailing whitespace warning when idle, and after saving
-
 "return '[\s]' if trailing white space is detected
 "return '' otherwise
 function! StatuslineTrailingSpaceWarning()
@@ -141,11 +139,11 @@ endfunction
 
 "find the median of the given array of numbers
 function! s:Median(nums)
-    let nums = sort(a:nums)
+    let nums = sort(copy(a:nums), 'n')
     let l = len(nums)
 
     if l % 2 == 1
-        let i = (l-1) / 2
+        let i = l / 2
         return nums[i]
     else
         return (nums[l/2] + nums[(l/2)-1]) / 2

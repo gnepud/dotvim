@@ -1,7 +1,7 @@
 return function()
   -- Mappings.
   -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-  local opts = { noremap=true, silent=true }
+  local opts = { silent=true }
   local function diagnostic_jump(count)
     vim.diagnostic.jump({
       count = count,
@@ -27,7 +27,7 @@ return function()
 
       -- Mappings.
       -- See `:help vim.lsp.*` for documentation on any of the below functions
-      local bufopts = { noremap=true, silent=true, buf=bufnr }
+      local bufopts = { silent=true, buf=bufnr }
       vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
       vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
       vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
@@ -47,14 +47,7 @@ return function()
     end,
   })
 
-  -- Setup language servers using vim.lsp.config (Neovim 0.11+)
-  -- Uncomment the ones you need and ensure the LSP server is installed
-
-  -- TypeScript/JavaScript (npm install -g typescript-language-server typescript@6)
-  -- vim.lsp.config.ts_ls = {
-  --   cmd = { 'typescript-language-server', '--stdio' },
-  -- }
-  -- vim.lsp.enable('ts_ls')
+  -- Install each language server before enabling it.
 
   -- TypeScript/JavaScript (npm install -g typescript@7)
   vim.lsp.config.tsc = {
@@ -95,28 +88,4 @@ return function()
     cmd = { 'ruby-lsp' },
   }
   vim.lsp.enable('ruby_lsp')
-
-  -- Lua (brew install lua-language-server)
-  -- vim.lsp.config.lua_ls = {
-  --   cmd = { 'lua-language-server' },
-  -- }
-  -- vim.lsp.enable('lua_ls')
-
-  -- CSS (npm install -g vscode-langservers-extracted)
-  -- vim.lsp.config.cssls = {
-  --   cmd = { 'vscode-css-language-server', '--stdio' },
-  -- }
-  -- vim.lsp.enable('cssls')
-
-  -- HTML (npm install -g vscode-langservers-extracted)
-  -- vim.lsp.config.html = {
-  --   cmd = { 'vscode-html-language-server', '--stdio' },
-  -- }
-  -- vim.lsp.enable('html')
-
-  -- JSON (npm install -g vscode-langservers-extracted)
-  -- vim.lsp.config.jsonls = {
-  --   cmd = { 'vscode-json-language-server', '--stdio' },
-  -- }
-  -- vim.lsp.enable('jsonls')
 end

@@ -88,7 +88,7 @@ return {
   {
     'nvim-treesitter/nvim-treesitter-context',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    config = require('dotvim.treesitter_context'),
+    opts = {},
   },
   { 'kylechui/nvim-surround', opts = {} },
   { 'neovim/nvim-lspconfig', config = require('dotvim.lsp') },

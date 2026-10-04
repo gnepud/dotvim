@@ -3,6 +3,7 @@ augroup AutoCheckTime
   autocmd BufEnter,FocusGained * checktime
 augroup END
 
+" Refresh statusline warnings when idle and after saving.
 augroup StatuslineWarnings
   autocmd!
   autocmd CursorHold,BufWritePost * unlet! b:statusline_trailing_space_warning
