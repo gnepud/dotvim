@@ -34,7 +34,10 @@ set shiftwidth=2
 set expandtab   " use spaces, not tabs
 
 " use the system clipboard as the default register
-set clipboard=unnamed,unnamedplus
+if !empty($SSH_CONNECTION) || !empty($SSH_TTY)
+  let g:clipboard = 'osc52'
+endif
+set clipboard=unnamedplus
 
 set backspace=indent,eol,start    " backspace through everything in insert mode
 
